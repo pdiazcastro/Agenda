@@ -39,8 +39,8 @@ public class Contact implements Serializable{
 
     public String toString()
     {
-        return "Name: "+this.getName()+"\n"+
-                "Phone Number: "+this.getPhone();
+        return "Nombre: "+this.getName()+"\n"+
+                "Teléfono: "+this.getPhone();
     }
 
     public void addContact(Contact c, ArrayList<Contact> contacts)

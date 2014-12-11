@@ -22,28 +22,28 @@
             android:textAlignment="center">
 
             <TextView
-                android:text="Name:"
+                android:text="Nombre:"
                 android:textSize="25dp"/>
 
             <EditText
                 android:id="@+id/txtName"
-                android:hint="Write your name"
+                android:hint="Escribe el nombre"
                 android:layout_height="50dp"/>
 
             <TextView
-                android:text="Phone Number:"
+                android:text="Telefono:"
                 android:textSize="25dp"
                 android:layout_marginTop="10dp"/>
 
             <EditText
                 android:id="@+id/txtPhone"
                 android:inputType="number"
-                android:hint="Write your phone number"
+                android:hint="Escribe el número de teléfono"
                 android:layout_height="50dp"/>
 
             <Button
                 android:id="@+id/btnAdd"
-                android:text="ADD"
+                android:text="AÑADIR"
                 android:layout_marginTop="20dp"/>
 
             <TextView
@@ -57,7 +57,7 @@
 
             <Button
                 android:id="@+id/btnList"
-                android:text="ALL CONTACTS"
+                android:text="TODOS LOS CONTACTOS"
                 android:layout_marginTop="40dp"/>
 
 

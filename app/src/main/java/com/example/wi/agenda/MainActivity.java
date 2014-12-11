@@ -17,11 +17,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
-    //INICIAMOS CON UN ARRAYLIST DE TIPO CONTACT.
     ArrayList<Contact> contacts = new ArrayList<Contact>();
-    //CREAMOS UNA VARIABLE DE TIPO CONTACT PARA POSTERIORMENTE INSTANCIAR CONTACTOS.
+
     Contact c;
-    //ESTE INTEGER NOS INDICA SI EL TAMAÃ‘O DEL ARRAY HA SIDO MODIFICADO.
+
     int counterContacts=0;
 
     @Override
@@ -29,14 +28,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Llamamos a todos los graficos del XML para poder usarlos---
+
         final EditText name = (EditText)findViewById(R.id.txtName);
         final EditText phone = (EditText)findViewById(R.id.txtPhone);
         final Button add = (Button)findViewById(R.id.btnAdd);
         final Button list = (Button)findViewById(R.id.btnList);
-        //LLAMADA HASTA AQUI-----------------------------------------
 
-        //-----------editamos el color de fondo de los txt Y Btns.----------------/
         name.setBackgroundColor(Color.BLACK);
         phone.setBackgroundColor(Color.BLACK);
         name.setTextColor(Color.WHITE);
@@ -45,29 +42,23 @@ public class MainActivity extends Activity {
         list.setBackgroundColor(Color.BLACK);
         add.setTextColor(Color.WHITE);
         list.setTextColor(Color.WHITE);
-        //----------------------------hasta aqui----------------------------------
 
-        //--------------- abrimos el onclicklistener de add.--------------------
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //--------IGUALAMOS COUNTER CON LA CANTIDAD ACTUAL DEL ARRAYLIST
                 counterContacts = contacts.size();
 
-                //CREAMOS UN OBJETO DE TIPO CONTACTO NUEVO CON LAS VARIABLES NOMBRE Y TELEFONO PARA VERIFICACION
                 c = new Contact(name.getText().toString(), phone.getText().toString());
 
-                //llamamos al metodo check que nos dice si el contacto existe o no con ese nombre y ese telefono
                 if (c.check(c, contacts) == true) {
-                    String msg = "The contact already EXISTS";
+                    String msg = "El contacto ya existe";
                     showToast(msg);
                 } else {
 
-                    //evaluamos si las variables estan vacias, si lo estan, no podemos aÃ±adir un contacto igual de lo contrario aÃ±adimos al array
                     if(name.getText().toString().equalsIgnoreCase("") || phone.getText().toString().equalsIgnoreCase(""))
                     {
-                        String msg="We need NAME AND PHONE NUMBER to add the contact";
+                        String msg="Necesitamos NOMBRE y NÚMERO DE TELÉFONO para añadir el contacto";
                         showToast(msg);
                     }
                     else
@@ -75,46 +66,38 @@ public class MainActivity extends Activity {
                         c.addContact(c, contacts);
                     }
 
-                    //---------------hasta aqui-------------
 
-                    //preguntamos si hubo modificacion en el tamaÃ±o del array, si lo hubo significa que nuestro contacto se aÃ±adiÃ³ exitosamente
                     if (contacts.size() > counterContacts) {
-                        String msg = "Contact: " + c.getName() + " successfully added";
+                        String msg = "Contacto: " + c.getName() + " añadido correctamente";
                         showToast(msg);
                         name.setText("");
                         phone.setText("");
                     }
-                    //de lo contrario un mensaje de error de NO AÃ‘ADIDO
+
                     else {
-                        String msg = "Error: " + c.getName() + " was NOT added";
+                        String msg = "Error: " + c.getName() + " NO ha sido añadido";
                         showToast(msg);
                     }
                 }
             }
         });
 
-        //abrimos el listener de listar
+
         list.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                //evaluamos si el tamaÃ±o del array es igual a 0 ( esto significa que no hay elementos que listar, asi que nos mostrarÃ¡ un mensaje de aviso
 
                 if (contacts.size()==0)
                 {
-                    String msg ="There aren't any contacts on your list";
+                    String msg ="No tienes contactos en tu lista";
                     showToast(msg);
                 }
-                //de lo contrario se crea un intento con el arraylist serializado y se inicia la actividad esperando un result_ok
                 else {
-                    // c = new Contact();
-                    // c.setArrayListContacts(contacts);
-
-                    //creamos el intento con  Intent intento = new Intent(laclaseenlaqueestamos.this, clasealaquellamamos.class);
                     Intent intent = new Intent(MainActivity.this, Listar.class);
-                    //serializamos el objeto y le aÃ±adimos una clave de recogida
+
                     intent.putExtra("contacts", contacts);
-                    //lanzamos la actividad listar con el resultado 1 requestcode
+
                     startActivityForResult(intent, 1);
                 }
             }
@@ -122,13 +105,10 @@ public class MainActivity extends Activity {
     }
 
 
-    //metodo sobrescrito onactivityresult que me recibem esos 3 parametros el intent contiene el objeto con las modificaciones necesarias.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //evaluamos si el resultado y respuesta son positivas
         if (requestCode==1 && resultCode==RESULT_OK)
         {
-            //si lo son convertimos el Intent data en nuestro array y lo desserealizamos con la clave del paquete.
             contacts = (ArrayList<Contact>)data.getSerializableExtra("contacts");
         }
     }
